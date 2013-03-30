@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- build.xml for Lifeline -->
+<project name="AirHttp" basedir=".." default="main">
+  <property file="${basedir}/build/build.properties" />
+  <taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar"/>
+  <target name="main" description="Compiles airhttp files into a SWC">
+    <echo>Compiling "${bin}/airhttp.swc"...</echo>
+    <compc 
+      output="${bin}/airhttp.swc"
+      include-classes="com.airhttp.HttpServer com.airhttp.ActionController com.airhttp.FileController"
+      >
+      <load-config filename="${FLEX_HOME}/frameworks/air-config.xml" />
+      <source-path path-element="${basedir}/src"/>
+    </compc>
+  </target>
+  <target name="clean">
+      <delete>
+          <fileset dir="${bin}" includes="airhttp.swc"/>
+      </delete>
+  </target>
+</project>
