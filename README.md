@@ -33,7 +33,7 @@ server.
     
     // instantiate the server on port 4567
     webserv = (new HttpServer());
-    var isListening:Boolean = webserv.listen(4568);
+    var isListening:Boolean = webserv.listen(4567);
   
 Extending your Application to HTTP with ActionControllers
 ---------------------------------------------------------
