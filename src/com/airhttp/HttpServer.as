@@ -51,6 +51,7 @@ package com.airhttp
         private var _fileController:FileController;
         private var _errorCallback:Function = null;
         private var _isConnected:Boolean = false;
+        private var _maxRequestLength:int = 2048;
         
         public function HttpServer()
         {
@@ -70,6 +71,24 @@ package com.airhttp
             return _isConnected;
         }
 
+        /**
+        * Get the maximum lenght of a request in bytes.
+        * Requests longer than this will be truncated.
+        */
+        public function get maxRequestLength():int
+        {
+          return _maxRequestLength;
+        }
+        
+        /**
+        * Set the maximum lenght of a request in bytes.
+        * Requests longer than this will be truncated.
+        */
+        public function set maxRequestLength(value:int):void
+        {
+          _maxRequestLength = value;
+        }
+        
         /**
         * Begin listening on a specified port.
         * 
@@ -135,10 +154,21 @@ package com.airhttp
                 var socket:Socket = event.target as Socket;
                 var bytes:ByteArray = new ByteArray();
 
+                // Do not read more than _maxRequestLength bytes
+                var bytes_to_read = (socket.bytesAvailable > _maxRequestLength) ? _maxRequestLength : socket.bytesAvailable;
+                
                 // Get the request string and pull out the URL 
                 socket.readBytes(bytes);
                 var request:String          = "" + bytes;
                 var url:String              = request.substring(4, request.indexOf("HTTP/") - 1);
+                
+                // It must be a GET request
+                if (request.substring(0, 3).toUpperCase() != 'GET') {
+                  socket.writeUTFBytes(ActionController.responseNotAllowed("HttpServer only supports GET requests."))
+                  socket.flush();
+                  socket.close();
+                  return;
+                }
                 
                 // Parse out the controller name, action name and paramert list
                 var url_pattern:RegExp      = /(.*)\/([^\?]*)\??(.*)$/;

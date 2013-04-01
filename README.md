@@ -15,7 +15,8 @@ Version
 
 This is version 0.1.0
 
-* Still needs to be tested
+* Only supports GET requests
+* Still needs to be fully tested
 * Its working with Flash Build 4.7 and SDK 4.6.0
 
 Adding the HTTP Server to Your Application

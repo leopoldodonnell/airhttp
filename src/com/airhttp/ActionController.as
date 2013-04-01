@@ -90,7 +90,7 @@ package com.airhttp
         * 
         * @returns a String with the successful response.
          */
-        protected function responseSuccess(content:String, mimeType:String = "text/html"):String
+        protected static function responseSuccess(content:String, mimeType:String = "text/html"):String
         {
             return response(200, "OK", content, mimeType);    
         }
@@ -103,7 +103,7 @@ package com.airhttp
          * 
          * @returns a String with the error response.
          */
-        protected function actionNotFound(action:String):String
+        protected static function actionNotFound(action:String):String
         {
             var s:String = "Action: " + action + " Not Found"
             return responseNotFound(s);
@@ -116,7 +116,7 @@ package com.airhttp
          * 
          * @returns a String with the error response.
          */
-        protected function responseNotFound(content:String):String
+        protected static function responseNotFound(content:String):String
         {
             return response(404, "Not Found", content);    
         }
@@ -128,9 +128,21 @@ package com.airhttp
          * 
          * @returns a String with the error response.
          */
-        protected function responseForbidden(content:String):String
+        protected static function responseForbidden(content:String):String
         {
             return response(403, "Forbidden", content);    
+        }
+        
+        /**
+         * Convenience function to respond when a Resource is Not Allowed.
+         * 
+         * @param content is the HTML error message to be displayed.
+         * 
+         * @returns a String with the error response.
+         */
+        public static function responseNotAllowed(content:String):String
+        {
+            return response(405, "Method Not Allowed", content);    
         }
         
         /**
@@ -143,7 +155,7 @@ package com.airhttp
          * 
          * @returns a String with the error response.
          */
-        protected function response(code:int, message:String = "", content:String = "", mimeType:String = "text/html"):String
+        protected static function response(code:int, message:String = "", content:String = "", mimeType:String = "text/html"):String
         {
             return header(code, message, mimeType) + content; 
         }
@@ -157,7 +169,7 @@ package com.airhttp
          * 
          * @returns a String with the HTTP 1.1 header
          */
-        protected function header(code:int, message:String = "", mimeType:String = "text/html"):String
+        protected static function header(code:int, message:String = "", mimeType:String = "text/html"):String
         {
             return "HTTP/1.1 " + code.toString() + " " + message + "\n" + "Content-Type: " + mimeType + "\n\n";             
         }
