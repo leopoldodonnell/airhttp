@@ -155,7 +155,7 @@ package com.airhttp
                 var bytes:ByteArray = new ByteArray();
 
                 // Do not read more than _maxRequestLength bytes
-                var bytes_to_read = (socket.bytesAvailable > _maxRequestLength) ? _maxRequestLength : socket.bytesAvailable;
+                var bytes_to_read:int = (socket.bytesAvailable > _maxRequestLength) ? _maxRequestLength : socket.bytesAvailable;
                 
                 // Get the request string and pull out the URL 
                 socket.readBytes(bytes);
