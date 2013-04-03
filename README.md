@@ -26,6 +26,7 @@ Adding the **Air Http** server to your application is fairly simple (it must be 
 *com.airhttp*. To instantiate an start your server, add the following code to one of your application classes that will manage the
 server.
 
+```actionscript3
     // import the package
     import com.airhttp.*;
     
@@ -35,7 +36,8 @@ server.
     // instantiate the server on port 4567
     webserv = (new HttpServer());
     var isListening:Boolean = webserv.listen(4567);
-  
+```
+
 Extending your Application to HTTP with ActionControllers
 ---------------------------------------------------------
 
@@ -51,6 +53,7 @@ respond with some data is very simple.
 
 In AppServiceController.as ...
 
+```actionscript3
     class AppServiceController extends com.airhttp.ActionController
     {
       private var _theApp:Object;
@@ -91,6 +94,7 @@ In AppServiceController.as ...
           return responseSuccess("<h1>Status</h1>" + items);
       }
     }
+```
     
 Then in your webserver managing class ...
 
